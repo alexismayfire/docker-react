@@ -13,7 +13,7 @@ script:
 deploy:
   provider: gae
   keyfile: docker-react.json
-  project: docker-react
+  project: docker-react-242401
   default: true
   on:
     branch: master
