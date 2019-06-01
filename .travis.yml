@@ -1,9 +1,21 @@
 sudo: required
+
 services:
   - docker
 
 before_install:
+  - openssl aes-256-cbc -K $encrypted_5ba37f971d8a_key -iv $encrypted_5ba37f971d8a_iv
+  -in docker-react-37e0f2fb01e7.json.enc -out docker-react.json
+  -d
   - docker build -t alexismayfire/docker-react -f Dockerfile.dev .
 
 script:
   - docker run -e CI=true alexismayfire/docker-react npm run test -- --coverage
+
+deploy:
+  provider: gae
+  keyfile: docker-react.json
+  project: docker-react
+  default: true
+  on:
+    branch: master
